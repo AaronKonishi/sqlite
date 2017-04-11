@@ -1,0 +1,6 @@
+1.sorce readme
+ sqlite-amalgzmation : C source code;
+ sqlite-autoconf     : C source code, include configure script and makefile for TCL Interface;
+ sqlite-tools-linux  : A bundle of command-line tools for managing SQLite database files.
+
+
