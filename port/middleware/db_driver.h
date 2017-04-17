@@ -18,26 +18,19 @@
 
 #define _DEBUG_
 
-#ifdef _DEBUG_
-#define DB_DEBUG(format, args...)     printf(format, ##args)
-#endif
-#define DB_WARN(format, args...)     printf(format, ##args)
-#define DB_ERROR(format, args...)     printf(format, ##args)
-
-#define DB_MIDDLEWARE_VERSION   "V1.0.0A"
-
-#define DB_FULL_VERSION         "SQLITE Version : sqlite3-V" \
-                                SQLITE_VERSION \
-                                "\nSQLITE SourceID: " \
-                                SQLITE_SOURCE_ID \
-                                "\nMiddleware Version: " \
-                                DB_MIDDLEWARE_VERSION
-
 extern const char *db_version(void);
 extern int db_create(char *abs_path_name);
-extern int db_close(sqlite3 **db);
-extern int db_open(char *abs_path_name, sqlite3 **db);
 
+extern int db_open(char *abs_path_name, sqlite3 **db);
+extern int db_close(sqlite3 **db);
+
+extern int db_table_create(sqlite3 **db, char *table_name, char *table_info);
+extern int db_view_create(sqlite3 **db, char *view_name, char *view_sql);
+
+extern const char *db_errmsg(sqlite3 *db, int *errno);
+extern int db_sql_query_malloc(char **sql_ptr, char *sql_cmd, char *table_name, 
+                               char *table_operate, int extra_len);
+extern void db_sql_query_release(char **sql_ptr);
 
 #endif
 
