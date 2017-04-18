@@ -81,6 +81,7 @@ static void drop_table(sqlite3 **db)
     }
 }
 
+#ifdef _SUPPORT
 static void truncate_table(sqlite3 **db)
 {
     int ret = -1;
@@ -100,6 +101,7 @@ static void truncate_table(sqlite3 **db)
         printf("error = %d\n",ret);
     }
 }
+#endif
 
 static void alter_table(sqlite3 **db)
 {
@@ -140,6 +142,7 @@ static void alter_table(sqlite3 **db)
             }
             break;
         case 2:
+            #ifdef _SUPPORT
             printf("Input column name you want to delete:");
             fgets(column, 256, stdin);
             column[strlen(column)-1] = '\0';
@@ -149,9 +152,13 @@ static void alter_table(sqlite3 **db)
                 printf("del column, %s\n", db_errmsg(*db,&ret));
                 printf("error = %d\n",ret);
             }
+            #else
+            printf("SQLITE3 not support yet.\n");
+            #endif
             break;
         case 3:
         {
+            #ifdef _SUPPORT
             char old_column[256];
             printf("Input column old name:");
             fgets(old_column, 256, stdin);
@@ -163,9 +170,18 @@ static void alter_table(sqlite3 **db)
             column[strlen(column)-1] = '\0';
             type[strlen(type)-1] = '\0';
             ret = db_table_alter_change(db, table_name, old_column, column, type);
+            if(ret)
+            {
+                printf("change column, %s\n", db_errmsg(*db,&ret));
+                printf("error = %d\n",ret);
+            }
+            #else
+            printf("SQLITE3 not support yet.\n");
+            #endif
             break;
         }
         case 4:
+            #ifdef _SUPPORT
             printf("Input column name:");
             fgets(column, 256, stdin);
             printf("Input column new type:");
@@ -178,6 +194,9 @@ static void alter_table(sqlite3 **db)
                 printf("add column, %s\n", db_errmsg(*db,&ret));
                 printf("error = %d\n",ret);
             }
+            #else
+            printf("SQLITE3 not support yet.\n");
+            #endif
             break;
         case 5:
             printf("Input table new name:");
@@ -281,8 +300,11 @@ static void main_loop(sqlite3 **db)
                 break;
 
             case '3':  // truncate table
-                printf("SQLITE3 not support yet.\n");
+                #ifdef _SUPPORT
                 truncate_table(db); // not supported
+                #else
+                printf("SQLITE3 not support yet.\n");
+                #endif
                 break;
 
             case '4':  // alter table

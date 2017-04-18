@@ -215,6 +215,8 @@ int db_table_drop(sqlite3 **db, char *table_name)
     return 0;
 }
 
+#ifdef _SUPPORT
+/* sqlite3 not supported */
 int db_table_truncate(sqlite3 **db, char *table_name)
 {
     int ret = -1;
@@ -253,6 +255,7 @@ int db_table_truncate(sqlite3 **db, char *table_name)
 
     return 0;
 }
+#endif
 
 int db_table_alter_add(sqlite3 **db, char *table_name, char *name, char *type)
 {
@@ -290,6 +293,7 @@ int db_table_alter_add(sqlite3 **db, char *table_name, char *name, char *type)
     return 0;
 }
 
+#ifdef _SUPPORT
 /* sqlite3 not supported */
 int db_table_alter_drop(sqlite3 **db, char *table_name, char *name)
 {
@@ -402,6 +406,7 @@ int db_table_alter_modify(sqlite3 **db, char *table_name, char *name, char *new_
     
     return 0;
 }
+#endif
 
 int db_table_alter_rename(sqlite3 **db, char *table_name, char *new_name)
 {
@@ -437,6 +442,11 @@ int db_table_alter_rename(sqlite3 **db, char *table_name, char *new_name)
     db_sql_query_release(&sql_state);
     
     return 0;
+}
+
+int db_table_rename(sqlite3 **db, char *table_old_name, char *table_new_name)
+{
+    return db_table_alter_rename(db, table_old_name, table_new_name);
 }
 
 /*******************************************************************************
