@@ -1,0 +1,19 @@
+1.提加班申请；
+2.多次打开并多次操作的效果；
+3.提出差任务书；
+
+1.存储位置通过文件路径来决定；
+2.表明和表内容通过中间层决定；
+3.底层只提供数据库和表的访问方法；
+
+truncate_table()未使用；
+db_table_alter_drop()   not support
+db_table_alter_change()   not support
+db_table_alter_modify()   not support
+
+CREATE TABLE Customer  (First_Name char(50),Last_Name char(50),Address char(50),City char(50),Country char(25),Birth_Date datetime);
+
+(First_Name char(50),Last_Name char(50),Address char(50),City char(50),Country char(25),Birth_Date datetime);
+(First_Name char(50),Last_Name char(50),Address char(50),Country char(25))
+
+SELECT * from Customer
